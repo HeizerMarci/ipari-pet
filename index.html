@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="hu">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PET-gyűjtés | VSZC Ipari Technikum</title>
+  <link rel="icon" type="image/svg+xml" href="https://veszpremi-ipari.cms.intezmeny.edir.hu/uploads/ipari_cimer_20200623_technikum_af4829e3f3.svg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=recycling"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -480,21 +481,25 @@
       transform: translateY(0);
     }
 
-    .submit-icon {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 42px;
-      height: 42px;
-      flex: none;
-      border-radius: 50%;
-      background: var(--gold);
-      color: #fff;
-      font-size: 23px;
-      line-height: 1;
-      animation: pulse 2.2s ease-in-out infinite;
+    .submit-icon{
+      position:relative;
+      z-index:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:42px;
+      height:42px;
+      flex:none;
+      border-radius:50%;
+      background:var(--gold);
+      color:#fff;
+      font-size:25px;
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 600,
+        'GRAD' 0,
+        'opsz' 32;
+      animation:pulse 2.2s ease-in-out infinite;
     }
 
     .submit-text {
@@ -619,7 +624,7 @@
     </div>
 
     <a class="submit-btn" href="https://forms.gle/mwYWqFxYaJffgJF78" target="_blank">
-      <span class="submit-icon">♻</span>
+      <span class="submit-icon material-symbols-outlined">recycling</span>
       <span class="submit-text">
         <strong>Palackok leadása</strong>
         <small>Rögzítsd a leadott palackokat</small>
