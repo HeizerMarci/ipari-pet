@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PET-gyűjtés | VSZC Ipari Technikum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#16305A;        /* fejléc, lábléc */
+  --navy-2:#0F2342;
+  --gold:#C4952C;        /* kiemelés */
+  --page:#FFFFFF;
+  --panel:#F4F6F9;
+  --ink:#1B2430;
+  --muted:#5E6B7A;
+  --line:#DDE3EA;
+  --bar:#E8EDF4;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--page);color:var(--ink);
+  font-family:"Source Sans 3",system-ui,Arial,sans-serif;
+  font-size:16px;line-height:1.55;font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 24px}
+@media (max-width:640px){.wrap{padding:0 16px}}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;font-weight:700;margin:0;line-height:1.2}
+a{color:inherit}
+
+/* ── fejléc ───────────────────────────────── */
+.masthead{background:var(--navy);color:#fff}
+.masthead .wrap{display:flex;align-items:center;gap:16px;padding-top:16px;padding-bottom:16px}
+.crest{height:58px;width:auto;flex:none}
+.school{font-family:"Source Serif 4",Georgia,serif;font-size:17px;font-weight:600;line-height:1.25}
+.school span{display:block;font-family:"Source Sans 3",sans-serif;font-size:12.5px;font-weight:400;color:#A9BBD6;margin-top:2px}
+.rule{height:4px;background:var(--gold)}
+
+.pagetitle{padding:30px 0 22px;border-bottom:1px solid var(--line)}
+.pagetitle h1{font-size:clamp(26px,5vw,36px)}
+.pagetitle p{margin:8px 0 0;color:var(--muted);max-width:60ch;font-size:15.5px}
+
+/* ── számláló ─────────────────────────────── */
+.summary{display:grid;grid-template-columns:auto 1px 1fr;gap:28px;align-items:center;padding:26px 0}
+.summary .big{font-size:clamp(44px,10vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1;font-family:"Source Serif 4",Georgia,serif}
+.summary .big em{display:block;font:400 30px "Source Sans 3",sans-serif;font-style:normal;color:var(--muted);margin-top:8px}
+.vline{background:var(--line);align-self:stretch}
+.facts{display:flex;gap:30px;flex-wrap:wrap}
+.facts b{display:block;font-size:20px;font-weight:700}
+.facts span{font-size:13px;color:var(--muted)}
+@media (max-width:640px){
+  .summary{grid-template-columns:1fr;gap:18px}
+  .vline{display:none}
+}
+
+/* ── rangsor ──────────────────────────────── */
+section{padding:6px 0 0}
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-top:34px}
+.shead h2{font-size:21px}
+.shead h2::after{content:"";display:block;width:42px;height:3px;background:var(--gold);margin-top:8px}
+.tabs{display:flex;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.tabs button{
+  font:inherit;font-size:14.5px;font-weight:600;border:0;cursor:pointer;
+  background:#fff;color:var(--muted);padding:9px 18px;
+}
+.tabs button+button{border-left:1px solid var(--line)}
+.tabs button[aria-selected="true"]{background:var(--navy);color:#fff}
+.tabs button:focus-visible{outline:2px solid var(--gold);outline-offset:-3px}
+.note{margin:12px 0 0;font-size:14px;color:var(--muted)}
+
+.board{margin-top:14px;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.hrow,.row{display:grid;grid-template-columns:44px 1fr 108px 96px;align-items:center}
+.hrow{
+  background:var(--panel);border-bottom:1px solid var(--line);
+  font-size:12.5px;font-weight:600;color:var(--muted);padding:9px 16px;
+}
+.hrow .r{text-align:right}
+.row{padding:13px 16px;position:relative;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .fill{position:absolute;inset:0 auto 0 0;background:var(--bar);width:0;transition:width .45s ease}
+.row>*{position:relative}
+.rank{font-weight:700;color:var(--muted)}
+.cls{font-weight:600;font-size:17px}
+.cls small{display:block;font-weight:400;font-size:12.5px;color:var(--muted)}
+.n1,.n2{text-align:right;font-weight:700;font-size:17px}
+.n2{color:var(--muted);font-weight:600}
+.row.top .rank,.row.top .n1{color:var(--gold)}
+.row.top{background:#FFFCF4}
+.row.top .fill{background:#FAF1DA}
+.empty{padding:34px 16px;color:var(--muted)}
+.more{
+  display:block;width:100%;margin-top:2px;
+  font:inherit;font-size:14.5px;font-weight:600;color:var(--navy);
+  background:var(--panel);border:1px solid var(--line);border-top:0;
+  border-radius:0 0 3px 3px;padding:11px;cursor:pointer;
+}
+.more:hover{background:#EDF1F6}
+.more:focus-visible{outline:2px solid var(--gold);outline-offset:-3px}
+@media (max-width:640px){
+  .hrow,.row{grid-template-columns:30px 1fr 74px}
+  .hrow .c4,.row .n2{display:none}
+}
+
+/* ── szabályok (másodlagos) ───────────────── */
+.secondary{
+  margin:44px 0 0;background:var(--panel);border-top:3px solid var(--navy);
+  padding:26px 28px 28px;
+}
+.secondary h2{font-size:17px;margin-bottom:14px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px;font-size:14.5px;color:var(--muted)}
+.cols h3{font-family:"Source Sans 3",sans-serif;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;letter-spacing:.01em}
+.cols ul{margin:0;padding-left:17px}
+.cols li{margin-bottom:4px}
+.cols p{margin:0 0 6px}
+@media (max-width:640px){.cols{grid-template-columns:1fr}.secondary{padding:22px 18px}}
+
+/* ── lábléc ───────────────────────────────── */
+footer{background:var(--navy-2);color:#A9BBD6;margin-top:48px;font-size:13.5px}
+footer .wrap{padding:22px 24px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer b{color:#fff;font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <img class="crest" alt="Iskola címere"
+         src="https://veszpremi-ipari.cms.intezmeny.edir.hu/uploads/ipari_cimer_20200623_technikum_af4829e3f3.svg"
+         onerror="this.style.display='none'">
+    <div class="school">
+      Veszprémi SZC Ipari Technikum
+      <span>8200 Veszprém, Iskola u. 4.</span>
+    </div>
+  </div>
+</div>
+<div class="rule"></div>
+
+<div class="wrap">
+  <div class="pagetitle">
+    <h1>PET-palack gyűjtés</h1>
+    <p>Iskolai verseny a 2025/26-os tanévben. A tábla a leadások rögzítésekor
+       automatikusan frissül. <span id="stamp"></span></p>
+  </div>
+
+  <div class="summary">
+    <div class="big"><span id="total">—</span><em>leadott palack összesen</em></div>
+    <div class="vline"></div>
+    <div class="facts">
+      <div><b id="kg">—</b><span>műanyag</span></div>
+      <div><b id="ft">—</b><span>visszaváltási érték</span></div>
+      <div><b id="cls">—</b><span>versenyző osztály</span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="shead">
+      <h2>Osztályok rangsora</h2>
+      <div class="tabs" role="tablist">
+        <button role="tab" aria-selected="true" data-mode="total">PET-KIRÁLY</button>
+        <button role="tab" aria-selected="false" data-mode="per">PET-HŐS</button>
+      </div>
+    </div>
+    <p class="note" id="note"></p>
+    <div class="board" id="board"></div>
+    <button class="more" id="more" type="button" hidden></button>
+  </section>
+
+  <div class="secondary">
+    <h2>Tudnivalók</h2>
+    <div class="cols">
+      <div>
+        <h3>Mi ér pontot</h3>
+        <ul>
+          <li>Egy üres PET-palack egy pont, mérettől függetlenül.</li>
+          <li>Csak PET-palack számít, üveg és fémdoboz nem.</li>
+          <li>Lehet saját vagy útközben összeszedett palack.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Leadás</h3>
+        <p>A gyűjtőhely a földszinti folyosón, a portával szemben található.
+           A leadást mindenki magának rögzíti a kihelyezett QR-kóddal megnyíló űrlapon.</p>
+      </div>
+      <div>
+        <h3>Két kategória</h3>
+        <p><b>PET-KIRÁLY</b> — a legtöbb palackot leadó osztály.<br>
+           <b>PET-HŐS</b> — a legtöbb palack egy főre vetítve, így a kisebb
+           létszámú osztályok is versenyben vannak.</p>
+      </div>
+      <div>
+        <h3>Nyeremények</h3>
+        <ul>
+          <li>1. hely: egy szabadon megválasztott tanóra.</li>
+          <li>2. hely: pizza vagy csoki az osztálynak.</li>
+          <li>3. hely: kisebb jutalom.</li>
+          <li>A havi győztes kapja a vándorkupát.</li>
+        </ul>
+      </div>
+      <div style="grid-column:1/-1;border-top:1px solid var(--line);padding-top:14px">
+        <h3>Becsületkódex</h3>
+        <p>Az űrlapon mindenki elfogadja, hogy csak a ténylegesen leadott palackokat
+           számolja el. A jutalmakat a visszaváltásból befolyt összeg fedezi.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Veszprémi SZC Ipari Technikum</b> &middot; PET-gyűjtés</div>
+    <div id="foot"></div>
+  </div>
+</footer>
+
+<script type="module">
+/* ═══════════════════════════════════════════════════════════
+   1. BEÁLLÍTÁSOK
+   ═══════════════════════════════════════════════════════════ */
+const CONFIG = {
+  gramm: 30,   // egy palack becsült tömege, gramm — csak a kijelzéshez
+  betet: 50,   // visszaváltási díj palackonként, forint — csak a kijelzéshez
+  demo: true   // true = kitalált adat, ha még nincs élő kapcsolat
+};
+
+/* ═══════════════════════════════════════════════════════════
+   2. ADATFORRÁS
+   A számolást (SUMIF, palack/fő, helyezés) a Google Sheet végzi.
+   A render(csomag) formátuma pontosan az, amit a Sheet-hez kötött
+   Apps Script ír a Firebase "allapot" csomópontjába:
+   {
+     frissitve: "2026-09-16T13:33:09.000Z",
+     ossz_palack: 267,
+     osztalyok: [
+       { osztaly:"13.C", letszam:30, palack:133, per_fo:4.43,
+         hely_kiraly:1, hely_hos:2 }, ...
+     ]
+   }
+   ═══════════════════════════════════════════════════════════ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB5mTbNbHoy4MOJ8KEZMavdxl5lS5eTzkw",
+  authDomain: "iskola-pet.firebaseapp.com",
+  databaseURL: "https://iskola-pet-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "iskola-pet",
+  storageBucket: "iskola-pet.firebasestorage.app",
+  messagingSenderId: "441611015098",
+  appId: "1:441611015098:web:66ab9566ca7d0695ed8383"
+};
+
+const DEMO = {
+  frissitve: new Date().toISOString(),
+  ossz_palack: 267,
+  osztalyok: [
+    { osztaly:"13.C", letszam:30, palack:133, per_fo:4.43, hely_kiraly:1, hely_hos:2 },
+    { osztaly:"12.C", letszam:24, palack:23,  per_fo:0.96, hely_kiraly:4, hely_hos:4 },
+    { osztaly:"11.C", letszam:27, palack:34,  per_fo:1.26, hely_kiraly:3, hely_hos:3 },
+    { osztaly:"9.G",  letszam:20, palack:67,  per_fo:3.35, hely_kiraly:2, hely_hos:1 },
+    { osztaly:"22.C", letszam:26, palack:10,  per_fo:0.38, hely_kiraly:5, hely_hos:5 },
+    { osztaly:"10.B", letszam:29, palack:8,   per_fo:0.28, hely_kiraly:6, hely_hos:6 },
+    { osztaly:"11.A", letszam:25, palack:5,   per_fo:0.20, hely_kiraly:7, hely_hos:7 }
+  ]
+};
+
+try {
+  const db = getDatabase(initializeApp(firebaseConfig));
+  onValue(ref(db, "allapot"), snap => {
+    const val = snap.val();
+    if (val && Array.isArray(val.osztalyok) && val.osztalyok.length) render(val, "élő adat");
+    else render(CONFIG.demo ? DEMO : { osztalyok: [] }, CONFIG.demo ? "demó adat" : "nincs rögzített leadás");
+  }, err => {
+    console.warn("Firebase:", err);
+    if (CONFIG.demo) render(DEMO, "demó adat");
+  });
+} catch (e) {
+  console.warn("Firebase indítás sikertelen:", e);
+  if (CONFIG.demo) render(DEMO, "demó adat");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   3. MEGJELENÍTÉS — a kapott csomagot csak kirajzolja, nem számol
+   ═══════════════════════════════════════════════════════════ */
+let state = { rows: [], mode: "total", expanded: false };
+const TOP_N = 5;
+const nf = n => n.toLocaleString("hu-HU");
+const $ = id => document.getElementById(id);
+
+function render(csomag, forras) {
+  state.rows = csomag.osztalyok.map(o => ({
+    osztaly: o.osztaly,
+    darab: Number(o.palack) || 0,
+    fo: o.letszam || null,
+    per: o.per_fo ?? null
+  }));
+
+  const total = csomag.ossz_palack ?? state.rows.reduce((s, r) => s + r.darab, 0);
+  $("total").textContent = nf(total);
+  $("kg").textContent = nf(Math.round(total * CONFIG.gramm / 1000)) + " kg";
+  $("ft").textContent = nf(total * CONFIG.betet) + " Ft";
+  $("cls").textContent = state.rows.length;
+
+  const t = csomag.frissitve ? new Date(csomag.frissitve) : new Date();
+  $("stamp").textContent = "Frissítve: " +
+    t.toLocaleDateString("hu-HU") + " " +
+    t.toLocaleTimeString("hu-HU", {hour:"2-digit", minute:"2-digit"});
+  $("foot").textContent = forras;
+
+  draw();
+}
+
+function draw() {
+  const per = state.mode === "per";
+  $("note").textContent = per
+    ? "A leadott palackok száma osztva az osztálylétszámmal."
+    : "Az osztály által eddig leadott összes palack.";
+
+  const full = [...state.rows]
+    .filter(r => !per || r.per !== null)
+    .sort((a, b) => per ? b.per - a.per : b.darab - a.darab);
+
+  const board = $("board");
+  const more = $("more");
+
+  if (!full.length) {
+    board.innerHTML = '<p class="empty">Még nincs rögzített leadás.</p>';
+    more.hidden = true;
+    return;
+  }
+
+  const list = state.expanded ? full : full.slice(0, TOP_N);
+  const max = per ? full[0].per : full[0].darab;
+  const head = `<div class="hrow">
+      <div></div><div>Osztály</div>
+      <div class="r">${per ? "Palack / fő" : "Palack"}</div>
+      <div class="r c4">${per ? "Összesen" : "Palack / fő"}</div>
+    </div>`;
+
+  board.innerHTML = head + list.map((r, i) => {
+    const main = per ? r.per.toFixed(1).replace(".", ",") : nf(r.darab);
+    const side = per ? nf(r.darab) : (r.per ? r.per.toFixed(1).replace(".", ",") : "–");
+    const w = max ? ((per ? r.per : r.darab) / max * 100).toFixed(1) : 0;
+    return `<div class="row${i === 0 ? " top" : ""}">
+      <span class="fill" style="width:${w}%"></span>
+      <span class="rank">${i + 1}.</span>
+      <span class="cls">${r.osztaly}<small>${r.fo ? r.fo + " fő" : "létszám nincs megadva"}</small></span>
+      <span class="n1">${main}</span>
+      <span class="n2">${side}</span>
+    </div>`;
+  }).join("");
+
+  if (full.length > TOP_N) {
+    more.hidden = false;
+    more.textContent = state.expanded
+      ? "Csak az élen állók"
+      : "Összes megtekintése (" + full.length + ")";
+  } else {
+    more.hidden = true;
+  }
+}
+
+$("more").addEventListener("click", () => {
+  state.expanded = !state.expanded;
+  draw();
+});
+
+document.querySelectorAll(".tabs button").forEach(b => {
+  b.addEventListener("click", () => {
+    document.querySelectorAll(".tabs button")
+      .forEach(x => x.setAttribute("aria-selected", x === b));
+    state.mode = b.dataset.mode;
+    state.expanded = false;
+    draw();
+  });
+});
+
+render([], "betöltés");
+</script>
+</body>
+</html>
