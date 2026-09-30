@@ -882,7 +882,7 @@
       $("total").textContent = nf(total);
       $("kg").textContent = nf(Math.round(total * CONFIG.gramm / 1000)) + " kg";
       $("ft").textContent = nf(total * CONFIG.betet) + " Ft";
-      $("cls").textContent = state.rows.length;
+      $("cls").textContent = state.rows.filter(r => Number(r.darab) > 0).length;
 
       const vissza = csomag.visszavaltas || null;
       if (vissza && vissza.osszeg_ft !== undefined) {
